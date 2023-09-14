@@ -20,10 +20,12 @@ public class Login {
         this.userService = userService;
     }
 
-    private boolean auth(String email, String password){
-        return (email.equals("pedro@gmail.com") && password.equals("123"))
-                ||
-                (email.equals("admin@admin.com") && password.equals("123")) ;
+    private User auth(String email, String password) throws Exception {
+        System.err.println("Email recebido: " + email);
+        System.err.println("Password recebido: " + password);
+
+
+        return userService.login(email, password);
     }
 
     @GetMapping("/login")
@@ -31,17 +33,21 @@ public class Login {
         return "auth/login";
     }
 
+    /* TODO
+        Conferir pois só estou armazenando o email em sessão
+     */
     @PostMapping("/login")
     public String loginPost(
             @RequestParam(name = "email") String email,
             @RequestParam("password") String password,
             HttpSession session,
             Model model
-    ){
-        model.addAttribute("email", email);
-        model.addAttribute("password", password);
-        if(auth(email, password)){
-            session.setAttribute("user", email);
+    ) throws Exception {
+
+        User authenticatedUser = this.auth(email, password);
+
+        if(authenticatedUser  != null){
+            session.setAttribute("user", authenticatedUser.getEmail());
             session.setMaxInactiveInterval(SESSION_TIMEOUT);
             session.removeAttribute("error");
             return "redirect:/menu";

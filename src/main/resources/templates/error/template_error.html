@@ -7,21 +7,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand">Menu</a>
-            <div class="d-flex">
-                <a href="/logout" class="btn btn-outline-danger" type="submit">Logout</a>
-            </div>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand">Menu</a>
+        <div class="d-flex">
+            <a href="/logout" class="btn btn-outline-danger" type="submit">Logout</a>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="mx-auto" style="width: 200px;">
-        <a href="/error404">Erro HTML</a>
-    </div>
-    <div class="mx-auto" style="width: 200px;">
-        <a href="/errorJava">Erro Java</a>
-    </div>
+<div class="mx-auto" style="width: 200px;">
+    <h1>Oooops.. Um erro aconteceu!</h1>
+</div>
+
+<div class="ml-3 mt-3">
+    <p> <b>Mensagem do erro:</b>  <span th:text="${errorMessage}"></span></p>
+</div>
+
+<div class="ml-3 mt-3">
+    <p>Causa do erro: <span th:text="${errorCause}"></span></p>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>

@@ -12,11 +12,11 @@ import static com.example.trabalho_pratico.config.Constants.SESSION_TIMEOUT;
 
 @Controller
 @SessionAttributes("user")
-public class login {
+public class Login {
 
     private UserService userService;
 
-    public login(UserService userService){
+    public Login(UserService userService){
         this.userService = userService;
     }
 

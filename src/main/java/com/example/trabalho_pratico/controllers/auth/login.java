@@ -1,5 +1,7 @@
 package com.example.trabalho_pratico.controllers.auth;
 
+import com.example.trabalho_pratico.models.user.User;
+import com.example.trabalho_pratico.models.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,12 @@ import static com.example.trabalho_pratico.config.Constants.SESSION_TIMEOUT;
 @Controller
 @SessionAttributes("user")
 public class login {
+
+    private UserService userService;
+
+    public login(UserService userService){
+        this.userService = userService;
+    }
 
     private boolean auth(String email, String password){
         return (email.equals("pedro@gmail.com") && password.equals("123"))
@@ -55,7 +63,17 @@ public class login {
     }
 
     @PostMapping("/register")
-    public String registerPost(){
-        return null;
+    public String registerPost(
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "email") String email,
+            @RequestParam("password") String password,
+            HttpSession session,
+            Model model){
+
+        User user = new User(name, email, password);
+
+        userService.createUser(user);
+
+        return "redirect:/login";
     }
 }

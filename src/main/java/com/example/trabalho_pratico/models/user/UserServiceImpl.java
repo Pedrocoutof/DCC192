@@ -56,6 +56,11 @@ public class UserServiceImpl implements UserService{
         return sb.toString().equals(hashedPassword);
     }
 
+    // Função que retorna todos os usuários
+    public List<User> getUsers(){
+        return this.userRepository.findAll();
+    }
+
     @Override
     public User login(String email, String password) throws Exception {
         User user = findByEmail(email);

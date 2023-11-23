@@ -21,10 +21,6 @@ public class Login {
     }
 
     private User auth(String email, String password) throws Exception {
-        System.err.println("Email recebido: " + email);
-        System.err.println("Password recebido: " + password);
-
-
         return userService.login(email, password);
     }
 
@@ -33,9 +29,7 @@ public class Login {
         return "auth/login";
     }
 
-    /* TODO
-        Conferir pois só estou armazenando o email em sessão
-     */
+
     @PostMapping("/login")
     public String loginPost(
             @RequestParam(name = "email") String email,
@@ -47,7 +41,7 @@ public class Login {
         User authenticatedUser = this.auth(email, password);
 
         if(authenticatedUser  != null){
-            session.setAttribute("user", authenticatedUser.getEmail());
+            session.setAttribute("user", authenticatedUser);
             session.setMaxInactiveInterval(SESSION_TIMEOUT);
             session.removeAttribute("error");
             return "redirect:/menu";
@@ -76,10 +70,14 @@ public class Login {
             HttpSession session,
             Model model){
 
-        User user = new User(name, email, password);
+        User user = new User(name, email, password, 0);
 
-        userService.createUser(user);
+        if(userService.createUser(user) == null) {
+            session.setAttribute("error", "Não foi possível registrar usuário.");
+            return "redirect:/register";
+        }
 
+        session.removeAttribute("error");
         return "redirect:/login";
     }
 }

@@ -11,7 +11,11 @@
     <div class="card">
         <h5 class="card-header">Cadastro</h5>
         <div class="card-body mx-4">
-            <h5 class="card-title">Insira as informações abaixo!</h5>
+            <h5 th:if="${session.error == null}" class="card-title">Insira as informações abaixo!</h5>
+
+            <div th:if="${session.error}" class="alert alert-danger mb-3" role="alert">
+                <p th:text="${session.error}"></p>
+            </div>
             <form action="/register" method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome</label>

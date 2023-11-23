@@ -19,7 +19,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        try{
+            return userRepository.save(user);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
@@ -59,6 +63,16 @@ public class UserServiceImpl implements UserService{
     // Função que retorna todos os usuários
     public List<User> getUsers(){
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public boolean deleteUser(long id) {
+        try{
+            userRepository.deleteById(id);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
     @Override

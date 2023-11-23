@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.regex.Pattern;
 
@@ -14,7 +16,7 @@ import java.util.regex.Pattern;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User {
+public class User implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -28,6 +30,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column()
+    private int admin;
+
     private void verifyEmail(String email){
         try{
             Pattern emailPattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -40,12 +45,13 @@ public class User {
         }
     }
 
-    public User(String name, String email, String password){
+    public User(String name, String email, String password, int admin){
 
         this.verifyEmail(email);
 
         this.name = name;
         this.email = email;
+        this.admin = admin;
 
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");

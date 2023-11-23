@@ -1,5 +1,7 @@
 package com.example.trabalho_pratico.controllers;
 
+import com.example.trabalho_pratico.middlewares.isAuthenticated;
+import com.example.trabalho_pratico.models.user.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -12,10 +14,7 @@ public class HomeController {
 
     @GetMapping("/menu")
     public String menu(HttpSession session){
-        String isLogged = (String) session.getAttribute("user");
-        System.err.println("IsLogged: " + isLogged);
-
-        if(isLogged != null && !isLogged.isEmpty()){
+        if(isAuthenticated.main(session)) {
             return "menu";
         }
         return "redirect:/login";
